@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mi Juego de Fútbol</title>
+    <style>
+        header {
+            background-color: #0000FF; /* Azul */
+            color: white;
+            padding: 10px;
+            text-align: center;
+        }
+
+        .menu {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .menu-item {
+            width: 320px; /* Cambia el tamaño según lo necesites */
+            height: auto; /* Para mantener la proporción */
+            margin: 10px; /* Espacio entre las imágenes */
+        }
+        
+        .card {
+            border: 100% solid black;
+            padding: 35px;
+            margin: 35px;
+            display: inline-block;
+            cursor: pointer;
+        }
+
+        .card img {
+            width: 100px; /* Cambia el tamaño según lo necesites */
+            height: auto; /* Para mantener la proporción */
+        }
+
+        #equipo-jugadores {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        #equipo-jugadores .card {
+            margin: 60px;
+        }
+    </style>
+</head>
+<body style="background-color: White;">
+    <header>
+        <div class="player-info">
+            <span>Monedas: <span id="coins">50000000</span></span>
+            <span>TOTS: <span id="tots">100</span></span>
+        </div>
+        <button id="equipo">Equipo</button>
+        
+    </header>
+    <main>
+        <div class="menu">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRNwSNtWRxMauHb73sqDebMehmn2nQ-hMibRKFYWOv5kQ&s" alt="Mercado" class="menu-item" id="mercado">
+            <img src="data:image/jpeg;base64,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" alt="Evento TOTS" class="menu-item" id="tots">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTOChGJMVYQqDS2NnE0mQ1OV39nFSLDVDIRGw&s" alt="Apuestas" class="menu-item" id="FutbolQuiz">
+        </div>
+        <div id="mercado-container" style="display: none;">
+            <!-- Contenido de la pantalla flotante del mercado -->
+            
+            <h1>Comunes</h1>
+            <div class="card" onclick="comprarJugador(60000000, 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQRtlWbE0pLHjxUInam8C4sPXET1WLcQDfGjexpoOgPzQ&s')">
+    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQRtlWbE0pLHjxUInam8C4sPXET1WLcQDfGjexpoOgPzQ&s" alt="Valverde">
+    <p>Valor: 60.000.000 </p>
+    <button>Comprar</button>
+</div>
+
+
+            <div class="card" onclick="comprarJugador(150000000, 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTCGYqN6KXOR2djxLlBjCoDYzPO2X1j14NE0xHyWohVbw&s')">
+    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTCGYqN6KXOR2djxLlBjCoDYzPO2X1j14NE0xHyWohVbw&s" alt="Valverde">
+    <p>Valor: 150.000.000 </p>
+    <button>Comprar</button>
+</div>
+
+            <div class="card" onclick="comprarJugador(150000000, 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSsVCsOSqHerqc462WPDQ2iRW74ImZV8OcIEg&usqp=CAU')">
+    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSsVCsOSqHerqc462WPDQ2iRW74ImZV8OcIEg&usqp=CAU" alt="Van Dijk">
+    <p>Valor: 150.000.000 </p>
+    <button>Comprar</button>
+</div>
+
+            <!-- Agrega más cartas de jugadores aquí según sea necesario -->
+            
+           <div class="card" onclick="comprarJugador(150000000, 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSLVAWcTwMpvH8u3x26gK5AWkGawjruOeFQsA&usqp=CAU')">
+    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSLVAWcTwMpvH8u3x26gK5AWkGawjruOeFQsA&usqp=CAU" alt="Valverde">
+    <p>Valor: 150.000.000 </p>
+    <button>Comprar</button>
+</div>
+
+            <div class="card" onclick="comprarJugador(150000000, 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSy6l_DV9LPLa_oLcCChj9ledqE1UzB19mLah9G9nSDHw&s')">
+    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSy6l_DV9LPLa_oLcCChj9ledqE1UzB19mLah9G9nSDHw&s" alt="Valverde">
+    <p>Valor: 150.000.000 </p>
+    <button>Comprar</button>
+</div>
+
+            <div class="card" onclick="comprarJugador(150000000, 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4LwoeFIy2bNO2o2MRzx6ArBJ1bD_y2JDu6CGUDRWZBg&s')">
+    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4LwoeFIy2bNO2o2MRzx6ArBJ1bD_y2JDu6CGUDRWZBg&s" alt="Valverde">
+    <p>Valor: 150.000.000 </p>
+    <button>Comprar</button>
+</div>
+
+            <div class="card" onclick="comprarJugador(150000000, 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ1iGT7Zxmq9HkeFXs0DKsdL3Ed2DVKxrEPUmRMa8B-fw&s')">
+    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ1iGT7Zxmq9HkeFXs0DKsdL3Ed2DVKxrEPUmRMa8B-fw&s" alt="Valverde">
+    <p>Valor: 150.000.000 </p>
+    <button>Comprar</button>
+</div>
+           
+            
+            <div class="card" onclick="comprarJugador(150000000, 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcREYtZCFDcztNeEBxHzfgcc0Nt9ikMIZizpin4jPK7Szw&s')">
+    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcREYtZCFDcztNeEBxHzfgcc0Nt9ikMIZizpin4jPK7Szw&s" alt="Valverde">
+    <p>Valor: 150.000.000 </p>
+    <button>Comprar</button>
+</div>
+            
+            <div class="card" onclick="comprarJugador(150000000, 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ9LMNcv7wb_NBVaRDF70iuOnWkUQLpsgqIgJdFbTUibg&s')">
+    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ9LMNcv7wb_NBVaRDF70iuOnWkUQLpsgqIgJdFbTUibg&s" alt="Valverde">
+    <p>Valor: 150.000.000 </p>
+    <button>Comprar</button>
+</div>
+            
+            
+            <div class="card" onclick="comprarJugador(150000000, 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRoRb3rvwF_XF1RG1XXAl649ynCojHnLUp5gA3_kvi8VA&s')">
+    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRoRb3rvwF_XF1RG1XXAl649ynCojHnLUp5gA3_kvi8VA&s" alt="Valverde">
+    <p>Valor: 150.000.000 </p>
+    <button>Comprar</button>
+</div>
+            
+            <div class="card" onclick="comprarJugador(150000000, 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ5u_cW61i2SEMYU1B2DECy04sCpYctUyS5pKgb3EBO8Q&s')">
+    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ5u_cW61i2SEMYU1B2DECy04sCpYctUyS5pKgb3EBO8Q&s" alt="Valverde">
+    <p>Valor: 150.000.000 </p>
+    <button>Comprar</button>
+</div>
+            
+            <div class="card" onclick="comprarJugador(150000000, 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSjV9iayMH7mwghwgdIam0hEnFhkYJhRzvm65cnPNk2yg&s')">
+    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSjV9iayMH7mwghwgdIam0hEnFhkYJhRzvm65cnPNk2yg&s" alt="Valverde">
+    <p>Valor: 150.000.000 </p>
+    <button>Comprar</button>
+</div>
+            
+            <div class="card" onclick="comprarJugador(150000000, 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQBxcENf3vj10OSB_TLJHmi41lqOPBhRiGdBT5CDR5OiA&s')">
+    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQBxcENf3vj10OSB_TLJHmi41lqOPBhRiGdBT5CDR5OiA&s" alt="Valverde">
+    <p>Valor: 150.000.000 </p>
+    <button>Comprar</button>
+</div>
+            <div class="card" onclick="comprarJugador(150000000, 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSirpsN5_dOPFbmt7gF0J21z97640UHkZp622qLhYhm2A&s')">
+    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSirpsN5_dOPFbmt7gF0J21z97640UHkZp622qLhYhm2A&s" alt="Valverde">
+    <p>Valor: 150.000.000 </p>
+    <button>Comprar</button>
+</div>
+
+<div class="card" onclick="comprarJugador(150000000, 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR286wntLZrx27h2ZLTKdlIsLfs_ghQZ3nt_r8RMbqang&s')">
+    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR286wntLZrx27h2ZLTKdlIsLfs_ghQZ3nt_r8RMbqang&s" alt="Valverde">
+    <p>Valor: 150.000.000 </p>
+    <button>Comprar</button>
+</div>
+
+<div class="card" onclick="comprarJugador(150000000, 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSOTPpM8UlkDdUpqXTlPD8-S4irue54jQEOlZbfCviUDg&s')">
+    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSOTPpM8UlkDdUpqXTlPD8-S4irue54jQEOlZbfCviUDg&s" alt="Valverde">
+    <p>Valor: 150.000.000 </p>
+    <button>Comprar</button>
+</div>
+
+
+<div class="card" onclick="comprarJugador(150000000, 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR8suw5Di9RSd7g5Fw0IGJTt4HC3imCGqMe4GgsuHY5Cw&s')">
+    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR8suw5Di9RSd7g5Fw0IGJTt4HC3imCGqMe4GgsuHY5Cw&s" alt="Valverde">
+    <p>Valor: 150.000.000 </p>
+    <button>Comprar</button>
+</div>
+
+<div class="card" onclick="comprarJugador(150000000, 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRIcMfVNHiJofB0sbnDsANUa5zXpzi7dDLt3UNwL-Xang&s')">
+    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRIcMfVNHiJofB0sbnDsANUa5zXpzi7dDLt3UNwL-Xang&s" alt="Valverde">
+    <p>Valor: 150.000.000 </p>
+    <button>Comprar</button>
+</div>
+
+<div class="card" onclick="comprarJugador(150000000, 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT4tIW4z4LeG6MOQ8irYxXTJKPoCsoYtOm2O9v5l0g8hg&s')">
+    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT4tIW4z4LeG6MOQ8irYxXTJKPoCsoYtOm2O9v5l0g8hg&s" alt="Valverde">
+    <p>Valor: 150.000.000 </p>
+    <button>Comprar</button>
+</div>
+
+<div class="card" onclick="comprarJugador(150000000, 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQBZJy7JArlNKjbzWb15hj3_tEEyGl2pzRoEDu4GT7W0w&s')">
+    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQBZJy7JArlNKjbzWb15hj3_tEEyGl2pzRoEDu4GT7W0w&s" alt="Valverde">
+    <p>Valor: 150.000.000 </p>
+    <button>Comprar</button>
+</div>
+
+<div class="card" onclick="comprarJugador(150000000, 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTt4ePb5nNqTU3ZluiN56omhCG_eizONTrv6H-Q6lKqxQ&s')">
+    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTt4ePb5nNqTU3ZluiN56omhCG_eizONTrv6H-Q6lKqxQ&s" alt="Valverde">
+    <p>Valor: 150.000.000 </p>
+    <button>Comprar</button>
+</div>
+
+<div class="card" onclick="comprarJugador(150000000, 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS-kiZ5DeALzGWaBVyiuHtlEaLXCyeBsk0EhQ&usqp=CAU')">
+    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS-kiZ5DeALzGWaBVyiuHtlEaLXCyeBsk0EhQ&usqp=CAU" alt="Valverde">
+    <p>Valor: 150.000.000 </p>
+    <button>Comprar</button>
+</div>
+
+<div class="card" onclick="comprarJugador(150000000, 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRWlFuaVvwkyqpAly95HgSPYCdqrgPNZuHAww&usqp=CAU')">
+    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRWlFuaVvwkyqpAly95HgSPYCdqrgPNZuHAww&usqp=CAU" alt="Valverde">
+    <p>Valor: 150.000.000 </p>
+    <button>Comprar</button>
+</div>
+
+<div class="card" onclick="comprarJugador(150000000, '')">
+    <img src="" alt="Valverde">
+    <p>Valor: 150.000.000 </p>
+    <button>Comprar</button>
+</div>
+
+
+<div class="card" onclick="comprarJugador(150000000, '')">
+    <img src="" alt="Valverde">
+    <p>Valor: 150.000.000 </p>
+    <button>Comprar</button>
+</div>
+
+
+<div class="card" onclick="comprarJugador(150000000, '')">
+    <img src="" alt="Valverde">
+    <p>Valor: 150.000.000 </p>
+    <button>Comprar</button>
+</div>
+<div class="card" onclick="comprarJugador(150000000, '')">
+    <img src="" alt="Valverde">
+    <p>Valor: 150.000.000 </p>
+    <button>Comprar</button>
+</div>
+
+
+<div class="card" onclick="comprarJugador(150000000, '')">
+    <img src="" alt="Valverde">
+    <p>Valor: 150.000.000 </p>
+    <button>Comprar</button>
+</div>
+
+<div class="card" onclick="comprarJugador(150000000, '')">
+    <img src="" alt="Valverde">
+    <p>Valor: 150.000.000 </p>
+    <button>Comprar</button>
+</div>
+
+<div class="card" onclick="comprarJugador(150000000, '')">
+    <img src="" alt="Valverde">
+    <p>Valor: 150.000.000 </p>
+    <button>Comprar</button>
+</div>
+
+
+
+
+
+
+
+        <!-- -->
+     <h1>Tecnicos </h1>
+     <p>Compra a tu Director Técnico</p>
+        <!-- Aqui entran solamente Cartas con Banderas selección-->
+        
+        
+        
+        
+        
+        
+        
+        <!--aqui termina Selecciones -->
+        </div>
+        
+        
+        
+        
+        
+        <div id="tots-container" style="display: none;">
+            
+            
+            <div class="card" onclick="comprarJugadorTOTS(50, 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ7yRI40j-aT_3rr6diWshbshfDMHQUHmHUt8HyJzDHSQ&s')">
+    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ7yRI40j-aT_3rr6diWshbshfDMHQUHmHUt8HyJzDHSQ&s" alt="Valverde">
+    <p>Valor: 50 </p>
+    <button>Comprar</button>
+</div>
+
+<div class="card" onclick="comprarJugadorTOTS(50, 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTF7Nh5J-Ezzvq0L-pfCYM_o4hkmIOQ9SdC4IBort2TAQ&s')">
+    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTF7Nh5J-Ezzvq0L-pfCYM_o4hkmIOQ9SdC4IBort2TAQ&s" alt="Valvede">
+    <p>Valor: 70 </p>
+    <button>Comprar</button>
+</div>
+
+<div class="card" onclick="comprarJugadorTOTS(50, '')">
+    <img src="" alt="Valverde">
+    <p>Valor: 50 </p>
+    <button>Comprar</button>
+</div>
+
+<div class="card" onclick="comprarJugadorTOTS(50, '')">
+    <img src="" alt="Valverde">
+    <p>Valor: 50 </p>
+    <button>Comprar</button>
+</div>
+
+<div class="card" onclick="comprarJugadorTOTS(50, '')">
+    <img src="" alt="Valverde">
+    <p>Valor: 50 </p>
+    <button>Comprar</button>
+</div>
+
+<div class="card" onclick="comprarJugadorTOTS(50, '')">
+    <img src="" alt="Valverde">
+    <p>Valor: 50 </p>
+    <button>Comprar</button>
+</div>
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            <!-- Agrega más cartas de jugadores TOTS aquí según sea necesario -->
+        </div>
+        <div id="equipo-container" style="display: none;">
+            <!-- Contenido de la pantalla flotante del equipo -->
+            <div id="equipo-jugadores"></div>
+        </div>
+    </main>
+    <script>
+        // Variables para monedas, TOTS y equipo
+        let monedas = 500000000;
+        let tots = 100;
+        let equipo = [];
+
+        // Obtener elementos del DOM
+        const coinsDisplay = document.getElementById('coins');
+        const totsDisplay = document.getElementById('tots');
+        const equipoBtn = document.getElementById('equipo');
+        const mercadoBtn = document.getElementById('mercado');
+        const totsBtn = document.getElementById('tots');
+        const totsContainer = document.getElementById('tots-container');
+        const mercadoContainer = document.getElementById('mercado-container');
+        const equipoContainer = document.getElementById('equipo-container');
+        const equipoJugadores = document.getElementById('equipo-jugadores');
+
+
+// Escuchar el evento click en el botón de la imagen TOTS
+document.querySelector('.menu-item[id="tots"]').addEventListener('click', () => {
+    totsContainer.style.display = 'block';
+    mercadoContainer.style.display = 'none'; // Ocultar pantalla del mercado
+    equipoContainer.style.display = 'none'; // Ocultar pantalla del equipo
+});
+
+       // Escuchar el evento click en el botón del mercado
+mercadoBtn.addEventListener('click', () => {
+    mercadoContainer.style.display = 'block';
+    equipoContainer.style.display = 'none'; // Ocultar pantalla del equipo
+    totsContainer.style.display = 'none'; // Ocultar pantalla del TOTS
+});
+
+// Escuchar el evento click en el botón del equipo
+equipoBtn.addEventListener('click', () => {
+    equipoContainer.style.display = 'block';
+    mercadoContainer.style.display = 'none'; // Ocultar pantalla del mercado
+    totsContainer.style.display = 'none'; // Ocultar pantalla del TOTS
+    mostrarJugadoresEquipo();
+});
+
+        // Función para comprar un jugador del mercado con monedas
+function comprarJugador(valor, imagen) {
+    // Verificar si el usuario tiene suficientes monedas
+    if (monedas >= valor) {
+        // Reducir las monedas del usuario
+        monedas -= valor;
+        // Actualizar la visualización de las monedas
+        actualizarMonedas();
+        // Agregar el jugador al equipo del usuario con imagen
+        equipo.push({ valor: valor, imagen: imagen });
+    } else {
+        // Mostrar mensaje al usuario indicando que no tiene suficientes monedas
+        alert('No tienes suficientes monedas para comprar este jugador.');
+    }
+}
+
+// Función para comprar un jugador TOTS
+function comprarJugadorTOTS(valor, imagen) {
+    // Verificar si el usuario tiene suficientes TOTS
+    if (tots >= valor) {
+        // Reducir los TOTS del usuario
+        tots -= valor;
+        // Actualizar la visualización de los TOTS
+        actualizarTOTS();
+        // Agregar el jugador al equipo del usuario con imagen
+        equipo.push({ valor: valor, imagen: imagen });
+    } else {
+        // Mostrar mensaje al usuario indicando que no tiene suficientes TOTS
+        alert('No tienes suficientes TOTS para comprar este jugador.');
+    }
+}
+        
+
+        // Función para mostrar los jugadores comprados en el equipo
+        function mostrarJugadoresEquipo() {
+            equipoJugadores.innerHTML = ''; // Limpiar contenido anterior
+            equipo.forEach(jugador => {
+                const jugadorCard = document.createElement('div');
+                jugadorCard.classList.add('card');
+                jugadorCard.innerHTML = `
+                    <img src="${jugador.imagen}" alt="Jugador">
+                    <p>Valor: ${jugador.valor} ${jugador.valor === 50 ? 'TOTS' : ''}</p>
+                `;
+                equipoJugadores.appendChild(jugadorCard);
+            });
+        }
+
+        // Función para actualizar la visualización de las monedas
+        function actualizarMonedas() {
+            coinsDisplay.textContent = monedas;
+        }
+
+        // Función para actualizar la visualización de los TOTS
+        function actualizarTOTS() {
+            totsDisplay.textContent = tots;
+        }
+        
+      // Variable para almacenar el tiempo de la última vez que se presionó la imagen de Futbol Quiz
+let ultimoFutbolQuiz = 0;
+
+// Escuchar el evento click en el botón del Futbol Quiz
+document.querySelector('.menu-item[id="FutbolQuiz"]').addEventListener('click', () => {
+    const ahora = new Date().getTime(); // Obtener el tiempo actual en milisegundos
+    const diferenciaTiempo = ahora - ultimoFutbolQuiz;
+    const minutosPasados = diferenciaTiempo / (1000 * 60); // Convertir milisegundos a minutos
+
+    if (minutosPasados >= 15) { // Verificar si han pasado al menos 15 minutos desde la última vez
+        monedas += 400000; // Agregar 40000 monedas al saldo
+        tots += 50; // Agregar 50 TOTS al saldo
+        actualizarMonedas(); // Actualizar la visualización de las monedas
+        actualizarTOTS(); // Actualizar la visualización de los TOTS
+        ultimoFutbolQuiz = ahora; // Actualizar el tiempo de la última vez que se presionó
+    } else {
+        // Mostrar mensaje indicando que aún no han pasado 15 minutos
+        alert('Debes esperar 15 minutos para volver a Adquirir  monedas y TOTS.');
+    }
+});
+    </script>
+</body>
+                   </html>
